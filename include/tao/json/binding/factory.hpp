@@ -49,7 +49,8 @@ namespace tao::json::binding
       {
          [[nodiscard]] static const std::type_info* type()
          {
-            return &typeid( T );
+            // return &typeid( T );
+            return nullptr;
          }
 
          template< template< typename... > class Traits, typename... With >
@@ -169,18 +170,18 @@ namespace tao::json::binding
             return t;
          }();
 
-         const auto i = m.find( &typeid( *p ) );
-         if( i == m.end() ) {
-            std::ostringstream oss;
-            json::internal::format_to( oss, "unknown factory type ", pegtl::demangle< decltype( *p ) >(), " -- known are" );
-            internal::list_all_types( oss, m );
-            json::internal::format_to( oss, " for base class ", pegtl::demangle< Base >() );
-            throw std::runtime_error( std::move( oss ).str() );
-         }
-         i->second.function( v, p );
-         v = {
-            { i->second.name, std::move( v ) }
-         };
+         // const auto i = m.find( &typeid( *p ) );
+         // if( i == m.end() ) {
+         //    std::ostringstream oss;
+         //    json::internal::format_to( oss, "unknown factory type ", pegtl::demangle< decltype( *p ) >(), " -- known are" );
+         //    internal::list_all_types( oss, m );
+         //    json::internal::format_to( oss, " for base class ", pegtl::demangle< Base >() );
+         //    throw std::runtime_error( std::move( oss ).str() );
+         // }
+         // i->second.function( v, p );
+         // v = {
+         //    { i->second.name, std::move( v ) }
+         // };
       }
 
       template< typename V, template< typename... > class Traits, template< typename... > class Pointer, typename Base, typename Producer, typename F >
@@ -232,19 +233,19 @@ namespace tao::json::binding
             return t;
          }();
 
-         const auto i = m.find( &typeid( *p ) );
-         if( i == m.end() ) {
-            std::ostringstream oss;
-            json::internal::format_to( oss, "unknown factory type ", pegtl::demangle< decltype( *p ) >(), " -- known are" );
-            internal::list_all_types( oss, m );
-            json::internal::format_to( oss, " for base class ", pegtl::demangle< Base >() );
-            throw std::runtime_error( std::move( oss ).str() );
-         }
-         consumer.begin_object( 1 );
-         consumer.key( i->second.name );
-         i->second.function( consumer, p );
-         consumer.member();
-         consumer.end_object( 1 );
+         // const auto i = m.find( &typeid( *p ) );
+         // if( i == m.end() ) {
+         //    std::ostringstream oss;
+         //    json::internal::format_to( oss, "unknown factory type ", pegtl::demangle< decltype( *p ) >(), " -- known are" );
+         //    internal::list_all_types( oss, m );
+         //    json::internal::format_to( oss, " for base class ", pegtl::demangle< Base >() );
+         //    throw std::runtime_error( std::move( oss ).str() );
+         // }
+         // consumer.begin_object( 1 );
+         // consumer.key( i->second.name );
+         // i->second.function( consumer, p );
+         // consumer.member();
+         // consumer.end_object( 1 );
       }
    };
 
