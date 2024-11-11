@@ -156,7 +156,7 @@ namespace tao::json
          return v;
       }
 
-      basic_value& operator=( basic_value v ) noexcept( std::is_nothrow_move_assignable_v< variant_t > && std::is_nothrow_move_assignable_v< public_base_t > )
+      basic_value& operator=( basic_value v ) noexcept( std::is_nothrow_move_assignable_v< variant_t >&& std::is_nothrow_move_assignable_v< public_base_t > )
       {
          m_variant = std::move( v.m_variant );
          public_base_t::operator=( static_cast< public_base_t&& >( v ) );
@@ -930,7 +930,7 @@ namespace tao::json
                return a.back();
             }
             const auto i = e->index();
-            if( i >= a.size() ) {
+            if( i > a.size() ) {
                throw std::out_of_range( internal::format( "invalid JSON Pointer \"", internal::tokens_to_string( b, std::next( e ) ), "\", array index '", i, "' out of bound '", a.size(), '\'', json::message_extension( *this ) ) );
             }
             a.insert( a.begin() + i, std::move( in ) );
